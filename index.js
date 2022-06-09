@@ -1,10 +1,18 @@
 const Fighter = require("./src/Fighter.js");
-
-/** Create Heracles  */
-const heracles = new Fighter("🧔 Heracles", 20, 6);
+const Shield = require("./src/Shield.js");
+const Weapon = require("./src/Weapon.js");
 
 /** Create the opponent  */
 const boar = new Fighter("🐗 Erymanthian Boar", 25, 12);
+
+/** Create the weapon */
+
+const weapon = new Weapon("Épée");
+
+const shield = new Shield("Bouclier");
+
+/** Create Heracles  */
+const heracles = new Fighter("🧔 Heracles", 20, 6, weapon, shield);
 
 /**
  * Helper to produce the result of a round
@@ -25,3 +33,25 @@ const score = (fighter1, fighter2) => {
     loser: fighter1
   };
 };
+
+// Let's fight !!!
+{
+  let round = 0;
+
+  while (heracles.isAlive() && boar.isAlive()) {
+      console.log(`🕛 Round #${round}`);
+
+      heracles.fight(boar);
+      console.log(roundDisplay(heracles, boar));
+
+      boar.fight(heracles);
+      console.log(roundDisplay(boar, heracles));
+
+      round++;
+  }
+
+  const result = score(heracles, boar);
+
+  console.log(`💀 ${result.loser.name} is dead`);
+  console.log(`🏆 ${result.winner.name} wins (💙 ${result.winner.life} )`);
+}
